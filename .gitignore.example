@@ -1,0 +1,27 @@
+# Add to existing .gitignore
+node_modules/
+.env
+*.log
+.DS_Store
+Thumbs.db
+
+# Database
+*.sql
+*.db
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Runtime
+.tmp/
+.cache/
