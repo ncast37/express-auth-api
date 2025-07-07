@@ -75,15 +75,15 @@ const SignupForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setIsSubmitting(true);
     console.log('🚀 Starting signup process...');
-    
+
     try {
       const result = await signup(formData);
-      
+
       if (result.success) {
         console.log('✅ Signup successful!');
         setShowSuccess(true);
@@ -105,7 +105,7 @@ const SignupForm = () => {
       }
     } catch (error) {
       console.error('🚫 Signup error caught:', error);
-      
+
       // More specific error handling
       if (error.response?.status === 431) {
         setErrors({ general: 'Request too large. Please try again or contact support.' });
@@ -164,17 +164,17 @@ const SignupForm = () => {
       <div className="theme-selector">
         <h3>Choose Theme</h3>
         <div className="theme-options">
-          <div 
+          <div
             className={`theme-option default ${theme === 'default' ? 'active' : ''}`}
             onClick={() => setTheme('default')}
             title="Default Theme"
           />
-          <div 
+          <div
             className={`theme-option mocha ${theme === 'mocha' ? 'active' : ''}`}
             onClick={() => setTheme('mocha')}
             title="Mocha Theme"
           />
-          <div 
+          <div
             className={`theme-option glass ${theme === 'glass' ? 'active' : ''}`}
             onClick={() => setTheme('glass')}
             title="Glass Theme"
@@ -183,9 +183,9 @@ const SignupForm = () => {
       </div>
 
       <div className={`form-card ${getThemeClass()}`}>
-        <h2 className="form-title">Create Account</h2>
-        <p className="form-subtitle">Join thousands of users in our community</p>
-        
+        <h2 className="form-title">Hey boo</h2>
+        <p className="form-subtitle">You a cutie</p>
+
         {errors.general && (
           <div className="error-message" style={{ textAlign: 'center', marginBottom: '20px' }}>
             {errors.general}
@@ -249,12 +249,12 @@ const SignupForm = () => {
               </button>
             </div>
             {errors.password && <span className="error-message">{errors.password}</span>}
-            
+
             {formData.password && (
               <>
                 <div className="password-strength">
-                  <div 
-                    className="password-strength-bar" 
+                  <div
+                    className="password-strength-bar"
                     style={{ width: `${passwordStrength}%` }}
                   />
                 </div>
@@ -269,8 +269,8 @@ const SignupForm = () => {
             )}
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className={getButtonClass()}
             disabled={isSubmitting || showSuccess}
           >
@@ -287,7 +287,7 @@ const SignupForm = () => {
             <span>🔍</span> Continue with Google
           </button>
         </div>
-        
+
         <div>
           <button className="social-btn" disabled>
             <span>🍎</span> Continue with Apple
