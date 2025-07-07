@@ -47,17 +47,9 @@ BACKEND_PID=$!
 # Wait a moment for backend to start
 sleep 3
 
-# Navigate to client directory and start frontend
-echo -e "${GREEN}🎨 Starting frontend application...${NC}"
-cd client
-
-# Check if client dependencies are installed
-if [ ! -d "node_modules" ]; then
-    echo -e "${YELLOW}📦 Installing client dependencies...${NC}"
-    npm install
-fi
-
 # Start the React development server
+cd client
+export PORT=3001
 npm start &
 FRONTEND_PID=$!
 

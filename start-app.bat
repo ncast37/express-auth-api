@@ -43,8 +43,8 @@ if not exist "node_modules" (
     npm install
 )
 
-REM Start the React development server
-start "Frontend App" cmd /k "npm start"
+REM Start the React development server on port 3001
+start "Frontend App" cmd /k "set PORT=3001 && npm start"
 
 echo.
 echo ✅ Application started successfully!

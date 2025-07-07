@@ -2,11 +2,33 @@
 
 A complete full-stack application featuring a modern React frontend with multiple themes and a Node.js/Express backend with JWT authentication. Built following 2025 design trends and best practices.
 
-## 🎯 Project Overview
+## 🚀 **Latest Updates**
 
-This project recreates and enhances the signup form designs from the `signupFormDemo` with a fully functional React frontend integrated with a secure backend API. Features include multiple theme options, real-time validation, JWT authentication, and a responsive design.
+### ✨ **React Frontend Added** (Latest)
+- **Multiple Themes**: Default, Mocha Mousse, and Glassmorphism designs
+- **JWT Authentication**: Complete signup/login flow with protected routes
+- **Responsive Design**: Mobile-first approach with accessibility support
+- **Real-time Validation**: Password strength and form validation
+- **Modern UI**: Based on contemporary design trends
+- **Development Tools**: Automated startup scripts and debugging
 
-## 🌟 Key Features
+## 🎯 **Quick Start**
+
+### **Automated Setup (Recommended)**
+```bash
+# Windows
+./start-app.bat
+
+# macOS/Linux
+chmod +x start-app.sh
+./start-app.sh
+```
+
+### **Access Points**
+- **Frontend**: http://localhost:3001
+- **Backend API**: http://localhost:3000
+
+## 🌟 **Key Features**
 
 ### Frontend (React)
 - **Multiple Themes**: Default, Mocha Mousse, and Glassmorphism designs
