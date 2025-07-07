@@ -5,6 +5,7 @@ import SignupForm from './components/SignupForm';
 import LoginForm from './components/LoginForm';
 import Dashboard from './components/Dashboard';
 import './App.css';
+import './mobile.css';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {

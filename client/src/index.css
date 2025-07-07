@@ -98,6 +98,58 @@ code {
   }
 }
 
+/* Mobile-first improvements */
+@media (max-width: 768px) {
+  .social-btn {
+    padding: 12px;
+    font-size: 0.95rem;
+    gap: 8px;
+  }
+
+  .social-btn span {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .social-btn {
+    padding: 10px;
+    font-size: 0.9rem;
+    gap: 6px;
+  }
+
+  .social-btn span {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .social-btn {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  .social-btn span {
+    font-size: 0.95rem;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (pointer: coarse) {
+  .social-btn,
+  .btn-primary,
+  .form-input,
+  .password-toggle {
+    min-height: 44px; /* iOS recommended touch target size */
+  }
+
+  .theme-option {
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 8px;
+  }
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   * {

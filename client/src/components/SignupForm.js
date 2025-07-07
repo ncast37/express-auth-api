@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useMobileFormOptimization, useFocusManagement } from '../utils/mobileUtils';
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +18,11 @@ const SignupForm = () => {
 
   const { signup } = useAuth();
   const navigate = useNavigate();
+  const formRef = useRef(null);
+  
+  // Mobile optimization hooks
+  const { isMobile, isLandscape, keyboardOpen } = useMobileFormOptimization();
+  const { focusFirstError } = useFocusManagement();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -120,6 +126,10 @@ const SignupForm = () => {
       }
     } finally {
       setIsSubmitting(false);
+      // Focus first error field on mobile for better UX
+      if (isMobile && Object.keys(errors).length > 0) {
+        setTimeout(() => focusFirstError(formRef), 100);
+      }
     }
   };
 
@@ -159,30 +169,41 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="form-container">
-      {/* Theme Selector */}
-      <div className="theme-selector">
-        <h3>Choose Theme</h3>
-        <div className="theme-options">
-          <div
-            className={`theme-option default ${theme === 'default' ? 'active' : ''}`}
-            onClick={() => setTheme('default')}
-            title="Default Theme"
-          />
-          <div
-            className={`theme-option mocha ${theme === 'mocha' ? 'active' : ''}`}
-            onClick={() => setTheme('mocha')}
-            title="Mocha Theme"
-          />
-          <div
-            className={`theme-option glass ${theme === 'glass' ? 'active' : ''}`}
-            onClick={() => setTheme('glass')}
-            title="Glass Theme"
-          />
+    <div className={`form-container ${keyboardOpen ? 'keyboard-open' : ''} ${isLandscape ? 'landscape' : 'portrait'}`}>
+      {/* Theme Selector - Hide when keyboard is open on mobile */}
+      {(!isMobile || !keyboardOpen) && (
+        <div className="theme-selector">
+          <h3>Choose Theme</h3>
+          <div className="theme-options">
+            <div
+              className={`theme-option default ${theme === 'default' ? 'active' : ''}`}
+              onClick={() => setTheme('default')}
+              title="Default Theme"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && setTheme('default')}
+            />
+            <div
+              className={`theme-option mocha ${theme === 'mocha' ? 'active' : ''}`}
+              onClick={() => setTheme('mocha')}
+              title="Mocha Theme"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && setTheme('mocha')}
+            />
+            <div
+              className={`theme-option glass ${theme === 'glass' ? 'active' : ''}`}
+              onClick={() => setTheme('glass')}
+              title="Glass Theme"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && setTheme('glass')}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className={`form-card ${getThemeClass()}`}>
+      <form ref={formRef} className={`form-card ${getThemeClass()}`} onSubmit={handleSubmit}>
         <h2 className="form-title">Hey boo</h2>
         <p className="form-subtitle">You a cutie</p>
 
@@ -192,92 +213,94 @@ const SignupForm = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="name" className="form-label">Full Name</label>
+        <div className="form-group">
+          <label htmlFor="name" className="form-label">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            className={`form-input ${errors.name ? 'error' : ''}`}
+            placeholder="Enter your full name"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+            autoComplete="name"
+            inputMode={isMobile ? 'text' : undefined}
+          />
+          {errors.name && <span className="error-message">{errors.name}</span>}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="email" className="form-label">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            className={`form-input ${errors.email ? 'error' : ''}`}
+            placeholder="Enter your email address"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+            autoComplete="email"
+            inputMode={isMobile ? 'email' : undefined}
+          />
+          {errors.email && <span className="error-message">{errors.email}</span>}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="password" className="form-label">Password</label>
+          <div style={{ position: 'relative' }}>
             <input
-              type="text"
-              id="name"
-              name="name"
-              className={`form-input ${errors.name ? 'error' : ''}`}
-              placeholder="Enter your full name"
-              value={formData.name}
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              name="password"
+              className={`form-input ${errors.password ? 'error' : ''}`}
+              placeholder="Create a strong password"
+              value={formData.password}
               onChange={handleInputChange}
               required
-              autoComplete="name"
+              autoComplete="new-password"
             />
-            {errors.name && <span className="error-message">{errors.name}</span>}
+            <button
+              type="button"
+              className="password-toggle"
+              onClick={togglePasswordVisibility}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
           </div>
+          {errors.password && <span className="error-message">{errors.password}</span>}
 
-          <div className="form-group">
-            <label htmlFor="email" className="form-label">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className={`form-input ${errors.email ? 'error' : ''}`}
-              placeholder="Enter your email address"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-              autoComplete="email"
-            />
-            {errors.email && <span className="error-message">{errors.email}</span>}
-          </div>
+          {formData.password && (
+            <>
+              <div className="password-strength">
+                <div
+                  className="password-strength-bar"
+                  style={{ width: `${passwordStrength}%` }}
+                />
+              </div>
+              <div className="password-requirements">
+                {getPasswordRequirements().map((req, index) => (
+                  <div key={index} className={`requirement ${req.met ? 'met' : ''}`}>
+                    {req.text}
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
 
-          <div className="form-group">
-            <label htmlFor="password" className="form-label">Password</label>
-            <div style={{ position: 'relative' }}>
-              <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                name="password"
-                className={`form-input ${errors.password ? 'error' : ''}`}
-                placeholder="Create a strong password"
-                value={formData.password}
-                onChange={handleInputChange}
-                required
-                autoComplete="new-password"
-              />
-              <button
-                type="button"
-                className="password-toggle"
-                onClick={togglePasswordVisibility}
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-              >
-                {showPassword ? 'Hide' : 'Show'}
-              </button>
-            </div>
-            {errors.password && <span className="error-message">{errors.password}</span>}
+        <button
+          type="submit"
+          className={getButtonClass()}
+          disabled={isSubmitting || showSuccess}
+        >
+          {getButtonText()}
+        </button>
+      </form>
 
-            {formData.password && (
-              <>
-                <div className="password-strength">
-                  <div
-                    className="password-strength-bar"
-                    style={{ width: `${passwordStrength}%` }}
-                  />
-                </div>
-                <div className="password-requirements">
-                  {getPasswordRequirements().map((req, index) => (
-                    <div key={index} className={`requirement ${req.met ? 'met' : ''}`}>
-                      {req.text}
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-
-          <button
-            type="submit"
-            className={getButtonClass()}
-            disabled={isSubmitting || showSuccess}
-          >
-            {getButtonText()}
-          </button>
-        </form>
-
+      <div className="social-actions">
         <div className="divider">
           <span>or continue with</span>
         </div>

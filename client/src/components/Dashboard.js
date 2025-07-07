@@ -24,6 +24,7 @@ const Dashboard = () => {
           <button 
             onClick={handleLogout}
             className="logout-btn"
+            aria-label="Logout from your account"
           >
             Logout
           </button>
@@ -240,28 +241,278 @@ const Dashboard = () => {
           font-size: 0.9rem;
         }
 
+        /* Enhanced mobile responsiveness */
+        @media (max-width: 1024px) {
+          .dashboard-container {
+            padding: 20px 15px;
+          }
+          
+          .dashboard-card {
+            padding: 30px;
+          }
+        }
+
         @media (max-width: 768px) {
+          .dashboard-container {
+            padding: 15px 10px;
+          }
+
+          .dashboard-card {
+            padding: 24px 20px;
+            border-radius: 16px;
+          }
+
           .dashboard-header {
             flex-direction: column;
             align-items: flex-start;
             gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
           }
 
           .dashboard-title {
             font-size: 1.5rem;
+            line-height: 1.3;
+          }
+
+          .logout-btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            align-self: flex-end;
+            width: auto;
           }
 
           .user-info {
             flex-direction: column;
             text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
           }
 
           .user-avatar {
             margin: 0 0 16px 0;
+            width: 70px;
+            height: 70px;
+            font-size: 1.8rem;
+          }
+
+          .user-details h2 {
+            font-size: 1.3rem;
+          }
+
+          .user-email {
+            font-size: 0.95rem;
+          }
+
+          .signup-date {
+            font-size: 0.85rem;
+          }
+
+          .welcome-message {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+          }
+
+          .welcome-message h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+          }
+
+          .welcome-message p {
+            font-size: 0.9rem;
+            line-height: 1.5;
           }
 
           .features-grid {
             grid-template-columns: 1fr;
+            gap: 16px;
+          }
+
+          .feature-card {
+            padding: 20px;
+            border-radius: 12px;
+          }
+
+          .feature-icon {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+          }
+
+          .feature-card h4 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+          }
+
+          .feature-card p {
+            font-size: 0.85rem;
+            line-height: 1.4;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .dashboard-container {
+            padding: 10px 5px;
+          }
+
+          .dashboard-card {
+            padding: 20px 16px;
+            border-radius: 12px;
+          }
+
+          .dashboard-header {
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+          }
+
+          .dashboard-title {
+            font-size: 1.3rem;
+          }
+
+          .logout-btn {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+          }
+
+          .user-info {
+            padding: 16px;
+            margin-bottom: 20px;
+          }
+
+          .user-avatar {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+          }
+
+          .user-details h2 {
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+          }
+
+          .welcome-message {
+            padding: 16px;
+            margin-bottom: 20px;
+          }
+
+          .welcome-message h3 {
+            font-size: 1.1rem;
+          }
+
+          .welcome-message p {
+            font-size: 0.85rem;
+          }
+
+          .features-grid {
+            gap: 12px;
+          }
+
+          .feature-card {
+            padding: 16px;
+          }
+
+          .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+          }
+
+          .feature-card h4 {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+          }
+
+          .feature-card p {
+            font-size: 0.8rem;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .dashboard-card {
+            padding: 16px 12px;
+          }
+
+          .dashboard-title {
+            font-size: 1.2rem;
+          }
+
+          .user-info {
+            padding: 12px;
+          }
+
+          .welcome-message {
+            padding: 12px;
+          }
+
+          .feature-card {
+            padding: 12px;
+          }
+        }
+
+        /* Landscape mobile orientation */
+        @media (max-height: 500px) and (orientation: landscape) {
+          .dashboard-container {
+            padding: 5px;
+          }
+
+          .dashboard-card {
+            padding: 16px;
+          }
+
+          .dashboard-header {
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+          }
+
+          .dashboard-title {
+            font-size: 1.2rem;
+          }
+
+          .user-info {
+            flex-direction: row;
+            text-align: left;
+            padding: 12px;
+            margin-bottom: 16px;
+          }
+
+          .user-avatar {
+            margin: 0 16px 0 0;
+            width: 50px;
+            height: 50px;
+            font-size: 1.3rem;
+          }
+
+          .welcome-message {
+            padding: 12px;
+            margin-bottom: 16px;
+          }
+
+          .features-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+          }
+
+          .feature-card {
+            padding: 12px;
+          }
+
+          .feature-icon {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+          }
+        }
+
+        /* Dynamic viewport units for mobile browsers */
+        @supports (height: 100dvh) {
+          .dashboard-container {
+            min-height: 100dvh;
+          }
+        }
+
+        @supports (height: 100svh) {
+          .dashboard-container {
+            min-height: 100svh;
           }
         }
       `}</style>
